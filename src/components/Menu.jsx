@@ -3,11 +3,12 @@ import S from "../styles/Menu.module.css"
 export const Menu = () => {
   return (
     <div className={S.menu}>
-      <div className={S.menuButton}>
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
+      <ul>
+        <li>Início</li>
+        <li>Sobre</li>
+        <li>Sla</li>
+        <li>Contatos</li>
+      </ul>
     </div>
   )
 }
