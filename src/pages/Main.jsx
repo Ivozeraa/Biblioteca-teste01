@@ -7,6 +7,7 @@ import FormUsuario from '../components/FormUsuario';
 import ListaLivros from '../components/ListaLivros';
 import ListaUsuarios from '../components/ListaUsuarios';
 import Emprestimo from '../components/Emprestimo';
+import { Header } from '../components/Header';
 
 const biblioteca = new Biblioteca();
 
@@ -38,8 +39,8 @@ export function Main() {
   }
 
   return (
-    <div style={{ padding: 20 }}>
-      <h1>Biblioteca Digital React</h1>
+    <div>
+      <Header />
       <FormLivro onAddLivro={addLivro} />
       <FormUsuario onAddUsuario={addUsuario} />
       <Emprestimo usuarios={usuarios} livros={livros} onEmprestar={handleEmprestimo} />
