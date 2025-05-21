@@ -9,6 +9,7 @@ import ListaUsuarios from '../components/ListaUsuarios';
 import Emprestimo from '../components/Emprestimo';
 import { Header } from '../components/Header';
 
+
 const biblioteca = new Biblioteca();
 
 export function Main() {
@@ -41,11 +42,6 @@ export function Main() {
   return (
     <div>
       <Header />
-      <FormLivro onAddLivro={addLivro} />
-      <FormUsuario onAddUsuario={addUsuario} />
-      <Emprestimo usuarios={usuarios} livros={livros} onEmprestar={handleEmprestimo} />
-      <ListaLivros livros={livros} />
-      <ListaUsuarios usuarios={usuarios} />
     </div>
   );
 }
