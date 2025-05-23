@@ -5,9 +5,9 @@ export const Menu = () => {
     <div className={S.menu}>
       <ul>
         <li>Início</li>
-        <li>Emprestados</li>
-        <li>Listas</li>
-        <li>Sobre</li>
+        <li>Buscar Livros</li>
+        <li>Meus Empréstimos</li>
+        <li>Reservas</li>
       </ul>
     </div>
   )

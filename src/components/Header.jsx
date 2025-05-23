@@ -13,10 +13,6 @@ export const Header = () => {
         <h1>Alexandria</h1>
       </div>
 
-      <div className={S.search}>
-        <input type="search" />
-      </div>
-
       <nav className={S.nav}>
         <Menu />
         <IconUser />

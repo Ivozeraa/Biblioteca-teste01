@@ -8,6 +8,7 @@ import ListaLivros from '../components/ListaLivros';
 import ListaUsuarios from '../components/ListaUsuarios';
 import Emprestimo from '../components/Emprestimo';
 import { Header } from '../components/Header';
+import { Content } from './Content'
 
 
 const biblioteca = new Biblioteca();
@@ -42,6 +43,7 @@ export function Main() {
   return (
     <div>
       <Header />
+      <Content />
     </div>
   );
 }
