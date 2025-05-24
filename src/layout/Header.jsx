@@ -1,4 +1,4 @@
-import S from '../styles/Header.module.css'
+import S from './styles/Header.module.css'
 
 import logo from '../assets/logo.png'
 

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import Styles from '../styles/formlivro.module.css'
 
 export default function FormLivro({ onAddLivro }) {
   const [titulo, setTitulo] = useState('');
@@ -15,7 +14,7 @@ export default function FormLivro({ onAddLivro }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h3 class={Styles.title}>Cadastrar Livro</h3>
+      <h3 class='title'>Cadastrar Livro</h3>
       <input placeholder="Título" value={titulo} onChange={e => setTitulo(e.target.value)} />
       <input placeholder="Autor" value={autor} onChange={e => setAutor(e.target.value)} />
       <input placeholder="ISBN" value={isbn} onChange={e => setIsbn(e.target.value)} />

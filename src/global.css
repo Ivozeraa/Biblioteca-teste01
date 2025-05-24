@@ -14,6 +14,8 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  
 }
 
 body {
@@ -24,7 +26,7 @@ body {
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: #000dff;
   text-decoration: inherit;
 }
 
@@ -50,7 +52,7 @@ button {
 }
 
 button:hover {
-  border-color: #646cff;
+  border-color: #41424d;
 }
 
 button:focus,
@@ -65,7 +67,7 @@ button:focus-visible {
   }
 
   a:hover {
-    color: #747bff;
+    color: #2c2c3b;
   }
 
   button {

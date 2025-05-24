@@ -4,9 +4,9 @@ import 'slick-carousel/slick/slick-theme.css';
 
 import img1 from '../assets/img1.jpg';
 
-import S from '../styles/Carousel.module.css';
+import S from './styles/Carrossel.module.css';
 
-export const Carousel = () => {
+export const Carrossel = () => {
   const settings = {
     dots: true,
     arrows: false,
@@ -19,9 +19,12 @@ export const Carousel = () => {
   };
 
   return (
-    <div className={S.carousel}>
-      <Slider {...settings}>
-
+    <div className={S.carrossel}>
+      <div className={S.overlay}></div>
+      <Slider {...settings} className={S.slider}>
+        <img src={img1}/>
+        <img src={img1}/>
+        <img src={img1}/>
       </Slider>
     </div>
   );

@@ -1,4 +1,4 @@
-import S from '../styles/IconUser.Module.css'
+import S from './styles/IconUser.Module.css'
 
 import { FaUser } from 'react-icons/fa'
 
