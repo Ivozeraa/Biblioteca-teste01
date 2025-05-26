@@ -15,7 +15,7 @@ export const Menu = () => {
       </NavLink>
 
       <NavLink
-        to="/buscarLivros"
+        to="/Livros"
         end
         className={({ isActive }) => (isActive ? 'link ativo' : 'link')}
       >
@@ -24,7 +24,7 @@ export const Menu = () => {
       </NavLink>
 
       <NavLink
-        to="/meusEmprestimos"
+        to="/Emprestimos"
         end
         className={({ isActive }) => (isActive ? 'link ativo' : 'link')}
       >
@@ -33,7 +33,7 @@ export const Menu = () => {
       </NavLink>
 
       <NavLink
-        to="/reservas"
+        to="/Reservas"
         end
         className={({ isActive }) => (isActive ? 'link ativo' : 'link')}
       >
@@ -41,16 +41,6 @@ export const Menu = () => {
 
       </NavLink>
 
-
-
-
-
-
-
-
-      {/* <li>Buscar Livros</li>
-        <li>Meus Empréstimos</li>
-        <li>Reservas</li> */}
     </nav>
   )
 }

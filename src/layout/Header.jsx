@@ -3,7 +3,7 @@ import S from './styles/Header.module.css'
 import logo from '../assets/logo.png'
 
 import { Menu } from '../components/Menu'
-import { IconUser } from '../components/IconUser'
+import { IconUser } from '../components/User'
 
 export const Header = () => {
   return (

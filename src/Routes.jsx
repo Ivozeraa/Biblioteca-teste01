@@ -14,9 +14,9 @@ export default function RoutesApp() {
         <Route path="/" element={<Inicio />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/buscarLivros" element={<BuscarLivros />} />
-        <Route path="/meusEmprestimos" element={<MeusEmprestimos/>}/>
-        <Route path="/reservas" element={<Reservas/>}/>
+        <Route path="/Livros" element={<BuscarLivros />} />
+        <Route path="/Emprestimos" element={<MeusEmprestimos/>}/>
+        <Route path="/Reservas" element={<Reservas/>}/>
         
 
       </Route>

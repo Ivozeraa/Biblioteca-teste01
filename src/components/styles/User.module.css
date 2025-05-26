@@ -1,0 +1,29 @@
+.icon {
+  background-color: #6b6b6b;
+  height: 30px;
+  width: 30px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: scale 0.2s ease-in-out;
+}
+
+.icon:hover {
+  scale: 1.1;
+}
+
+.userNav {
+  position: absolute;
+  right: 0px;
+  top: 0;
+  height: 100vh;
+  background-color: #fff;
+  margin: 0;
+}
+
+.userNav li {
+  list-style: none;
+}
+
+.userNav li:hover {
+  color: #6b6b6b;
+}
