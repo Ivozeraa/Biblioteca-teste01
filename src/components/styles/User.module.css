@@ -13,15 +13,32 @@
 
 .userNav {
   position: absolute;
-  right: 0px;
+  right: 0;
   top: 0;
+  width: 200px;
   height: 100vh;
-  background-color: #fff;
+  background-color: #0c0c0c;
   margin: 0;
+  text-align: right;
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out;
+  z-index: 1000;
+}
+
+.userNavAberto {
+  transform: translateX(0);
+}
+
+.userNav ul {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 0 25px;
 }
 
 .userNav li {
   list-style: none;
+
 }
 
 .userNav li:hover {

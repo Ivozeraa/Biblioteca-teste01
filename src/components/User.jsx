@@ -24,15 +24,13 @@ export const IconUser = () => {
     <div className={S.user} ref={menuRef}>
       <FaUser className={S.icon} onClick={() => setMenuAberto(!menuAberto)} />
 
-      {menuAberto && (
-        <nav className={S.userNav}>
-          <ul>
-            <li><a href="#inicio">Início</a></li>
-            <li><a href="#sobre">Sobre</a></li>
-            <li><a href="#contato">Contato</a></li>
-          </ul>
-        </nav>
-      )}
+      <nav className={`${S.userNav} ${menuAberto ? S.userNavAberto : ''}`}>
+        <ul>
+          <li><a href="#inicio">Início</a></li>
+          <li><a href="#sobre">Sobre</a></li>
+          <li><a href="#contato">Contato</a></li>
+        </ul>
+      </nav>
     </div>
   );
 };
