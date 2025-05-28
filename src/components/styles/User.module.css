@@ -15,7 +15,7 @@
   position: absolute;
   right: 0;
   top: 0;
-  width: 200px;
+  width: 150px;
   height: 100vh;
   background-color: #0c0c0c;
   margin: 0;
@@ -23,24 +23,35 @@
   transform: translateX(100%);
   transition: transform 0.3s ease-in-out;
   z-index: 1000;
+  padding: 20px;
 }
 
 .userNavAberto {
   transform: translateX(0);
 }
 
-.userNav ul {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 0 25px;
+.userNav a {
+  position: relative;
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+  transition: color 0.3s ease-in-out;
 }
 
-.userNav li {
-  list-style: none;
-
+.userNav a:hover {
+  color: #5b21b6;
 }
 
-.userNav li:hover {
-  color: #6b6b6b;
+.userNav a::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 0%;
+  height: 2px;
+  background-color: #5b21b6;
+  transition: width 0.3s ease-in-out;
+}
+
+.userNav a:hover::after {
+  width: 100%;
 }

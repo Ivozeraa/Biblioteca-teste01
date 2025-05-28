@@ -22,9 +22,9 @@ export const Carrossel = () => {
     <div className={S.carrossel}>
       <div className={S.overlay}></div>
       <Slider {...settings} className={S.slider}>
-        <img src={img1}/>
-        <img src={img1}/>
-        <img src={img1}/>
+        <img src={img1} />
+        <img src={img1} />
+        <img src={img1} />
       </Slider>
     </div>
   );
