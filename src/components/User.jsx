@@ -1,8 +1,7 @@
-import { NavLink } from 'react-router-dom'
+import { Navigate, NavLink, useNavigate } from 'react-router-dom'
 import { useState, useRef, useEffect } from "react";
 import { FaUser } from "react-icons/fa";
-import { supabase } from "../../SupabaseClient"; 
-
+import { supabase } from '../../SupabaseClient';
 import S from "./styles/User.module.css";
 
 export const IconUser = () => {
@@ -10,6 +9,7 @@ export const IconUser = () => {
   const [userPhoto, setUserPhoto] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const menuRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleClickFora = (event) => {
@@ -25,39 +25,39 @@ export const IconUser = () => {
   }, []);
 
   useEffect(() => {
-    const fetchUserFoto = async () => {
-      const { data, error } = await supabase.auth.getUser();
-
-      if (error) {
-        console.error("Erro ao buscar usuário:", error);
-        return;
-      }
-
-      const user = data?.user;
-
-      if (user && user.user_metadata?.foto) {
-        const path = user.user_metadata.foto; 
-        const { data: publicData } = supabase
-          .storage
-          .from('user-photos') 
-          .getPublicUrl(path);
-
-        if (publicData?.publicUrl) {
-          setUserPhoto(publicData.publicUrl);
-        } else {
-          console.warn("URL pública não encontrada para o path:", path);
+    const checkSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        setIsLoggedIn(true);
+        const user = session.user;
+        if (user?.user_metadata?.foto) {
+          setUserPhoto(user.user_metadata.foto);
         }
+      } else {
+        setIsLoggedIn(false);
       }
     };
 
-    fetchUserFoto();
+    checkSession();
   }, []);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    setIsLoggedIn(false);
+    setUserPhoto(null);
+    setMenuAberto(false);
+    navigate('/'); 
+  };
+
+  const handleLoginClick = () => {
+    navigate('/login');  
+  };
 
   return (
     <div className={S.user} ref={menuRef}>
       {userPhoto ? (
         <img
-          src={userPhoto}
+          src={`${userPhoto}?t=${new Date().getTime()}`}
           alt="Foto do usuário"
           className={S.fotoUsuario}
           onClick={() => setMenuAberto(!menuAberto)}
@@ -69,13 +69,13 @@ export const IconUser = () => {
       <nav className={`${S.userNav} ${menuAberto ? S.userNavAberto : ''}`}>
         <div className={S.login}>
           {isLoggedIn ? (
-            <NavLink style={{ color: 'red' }}>
+            <button style={{ color: 'red' }} onClick={handleLogout}>
               Sair
-            </NavLink>
+            </button>
           ) : (
-            <NavLink onClick={() => setIsLoggedIn(true)} className="btn-login">
+            <button onClick={handleLoginClick} className="btn-login">
               Fazer Login
-            </NavLink>
+            </button>
           )}
         </div>
       </nav>
