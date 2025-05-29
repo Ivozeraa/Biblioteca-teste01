@@ -1,0 +1,8 @@
+.principaisLivros{
+  position: absolute;
+  bottom: 200px;
+}
+
+.livros {
+  display: flex;
+}
