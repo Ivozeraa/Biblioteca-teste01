@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom'
 import { useState, useRef, useEffect } from "react";
 import { FaUser } from "react-icons/fa";
+import { supabase } from "../../SupabaseClient"; 
 
 import S from "./styles/User.module.css";
 
@@ -35,7 +36,17 @@ export const IconUser = () => {
       const user = data?.user;
 
       if (user && user.user_metadata?.foto) {
-        setUserPhoto(user.user_metadata.foto);
+        const path = user.user_metadata.foto; 
+        const { data: publicData } = supabase
+          .storage
+          .from('user-photos') 
+          .getPublicUrl(path);
+
+        if (publicData?.publicUrl) {
+          setUserPhoto(publicData.publicUrl);
+        } else {
+          console.warn("URL pública não encontrada para o path:", path);
+        }
       }
     };
 
