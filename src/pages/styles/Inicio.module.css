@@ -1,8 +1,12 @@
-.principaisLivros{
+.principaisLivros {
   position: absolute;
-  bottom: 200px;
+  bottom: 300px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
 }
 
 .livros {
   display: flex;
+  justify-content: center;
 }
