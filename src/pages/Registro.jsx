@@ -1,7 +1,7 @@
-// src/pages/Register.jsx
 import { useState } from "react";
 import { supabase } from "../../SupabaseClient";
 import { Link } from "react-router-dom";
+import styles from './styles/auth.module.css';
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -27,31 +27,31 @@ export default function Register() {
   }
 
   return (
-    <div style={{ padding: "2rem" }}>
-      <h1>Cadastro</h1>
-      <form onSubmit={handleRegister}>
+    <div className={styles.container}>
+      <h1 className={styles.title}>Cadastro</h1>
+      <form onSubmit={handleRegister} className={styles.form}>
         <input
+          className={styles.input}
           type="email"
           placeholder="Digite seu email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
         />
-        <br />
         <input
+          className={styles.input}
           type="password"
           placeholder="Digite sua senha"
           value={senha}
           onChange={(e) => setSenha(e.target.value)}
           required
         />
-        <br />
-        <button type="submit">Cadastrar</button>
-        <nav>
+        <button type="submit" className={styles.button}>Cadastrar</button>
+        <nav className={styles.navButton}>
           <Link to="/login">Já tem conta criada? Faça login</Link>
         </nav>
       </form>
-      {mensagem && <p>{mensagem}</p>}
+      {mensagem && <p style={{ marginTop: '1rem', color: '#fcd34d' }}>{mensagem}</p>}
     </div>
   );
 }
