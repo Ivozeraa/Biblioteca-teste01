@@ -1,3 +1,7 @@
+import { useState, useRef, useEffect } from 'react';
+import { FaUser } from 'react-icons/fa';
+
+import { NavLink } from 'react-router-dom'
 import { useState, useRef, useEffect } from "react";
 import { FaUser } from "react-icons/fa";
 
@@ -6,6 +10,7 @@ import S from "./styles/User.module.css";
 export const IconUser = () => {
   const [menuAberto, setMenuAberto] = useState(false);
   const [userPhoto, setUserPhoto] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const menuRef = useRef(null);
 
   useEffect(() => {
@@ -53,18 +58,18 @@ export const IconUser = () => {
         <FaUser className={S.icon} onClick={() => setMenuAberto(!menuAberto)} />
       )}
 
-      <nav className={`${S.userNav} ${menuAberto ? S.userNavAberto : ""}`}>
-        <ul>
-          <li>
-            <a href="#inicio">Início</a>
-          </li>
-          <li>
-            <a href="#sobre">Sobre</a>
-          </li>
-          <li>
-            <a href="#contato">Contato</a>
-          </li>
-        </ul>
+      <nav className={`${S.userNav} ${menuAberto ? S.userNavAberto : ''}`}>
+        <div className={S.login}>
+          {isLoggedIn ? (
+            <NavLink style={{ color: 'red' }}>
+              Sair
+            </NavLink>
+          ) : (
+            <NavLink onClick={() => setIsLoggedIn(true)} className="btn-login">
+              Fazer Login
+            </NavLink>
+          )}
+        </div>
       </nav>
     </div>
   );
