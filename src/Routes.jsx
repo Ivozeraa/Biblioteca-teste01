@@ -6,6 +6,7 @@ import { BuscarLivros } from "./pages/BuscarLivros";
 import { MeusEmprestimos } from "./pages/MeusEmprestimos";
 import { Reservas } from "./pages/Reservas";
 import { Layout } from './Layout'
+import { Config } from "./pages/Config";
 
 export default function RoutesApp() {
   return (
@@ -17,6 +18,7 @@ export default function RoutesApp() {
         <Route path="/Livros" element={<BuscarLivros />} />
         <Route path="/Emprestimos" element={<MeusEmprestimos />} />
         <Route path="/Reservas" element={<Reservas />} />
+        <Route path="/Config" element={<Config />} />
       </Route>
 
     </Routes>
