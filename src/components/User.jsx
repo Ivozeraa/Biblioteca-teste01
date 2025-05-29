@@ -1,8 +1,9 @@
-import { Navigate, NavLink, useNavigate } from 'react-router-dom'
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
 import { supabase } from '../../SupabaseClient';
 import S from "./styles/User.module.css";
+import { toast } from "react-toastify";
 
 export const IconUser = () => {
   const [menuAberto, setMenuAberto] = useState(false);
@@ -24,33 +25,51 @@ export const IconUser = () => {
     };
   }, []);
 
+  // Pega a sessão inicial
   useEffect(() => {
-    const checkSession = async () => {
+    const getSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
         setIsLoggedIn(true);
-        const user = session.user;
-        if (user?.user_metadata?.foto) {
-          setUserPhoto(user.user_metadata.foto);
+        if (session.user.user_metadata?.foto) {
+          setUserPhoto(session.user.user_metadata.foto);
         }
-      } else {
-        setIsLoggedIn(false);
       }
     };
-
-    checkSession();
+    getSession();
   }, []);
+
+  // Escuta mudanças no auth
+  useEffect(() => {
+    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "SIGNED_IN") {
+        setIsLoggedIn(true);
+        if (session?.user.user_metadata?.foto) {
+          setUserPhoto(session.user.user_metadata.foto);
+        }
+        toast.success("Usuário logado com sucesso!");
+        navigate("/");  // navega só aqui, depois do login
+      }
+      if (event === "SIGNED_OUT") {
+        setIsLoggedIn(false);
+        setUserPhoto(null);
+        toast.info("Você saiu da conta.");
+        navigate("/");  // navega também no logout
+      }
+    });
+
+    return () => {
+      authListener?.subscription.unsubscribe();
+    };
+  }, [navigate]);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    setIsLoggedIn(false);
-    setUserPhoto(null);
     setMenuAberto(false);
-    navigate('/'); 
   };
 
   const handleLoginClick = () => {
-    navigate('/login');  
+    navigate('/login');
   };
 
   return (

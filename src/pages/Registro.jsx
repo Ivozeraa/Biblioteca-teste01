@@ -1,16 +1,18 @@
 import { useState } from "react";
 import { supabase } from "../../SupabaseClient";
 import { Link } from "react-router-dom";
-import styles from './styles/auth.module.css';
+import styles from "./styles/auth.module.css";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Register() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-  const [mensagem, setMensagem] = useState("");
 
   async function handleRegister(e) {
     e.preventDefault();
-    setMensagem("Processando...");
+    toast.info("Processando cadastro...");
 
     const { data, error } = await supabase.auth.signUp({
       email,
@@ -18,40 +20,44 @@ export default function Register() {
     });
 
     if (error) {
-      setMensagem("❌ Erro: " + error.message);
+      toast.error("❌ Erro: " + error.message);
     } else {
-      setMensagem("✅ Conta criada com sucesso! Verifique seu e-mail.");
+      toast.success("✅ Conta criada com sucesso! Verifique seu e-mail.");
       setEmail("");
       setSenha("");
     }
   }
 
   return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>Cadastro</h1>
-      <form onSubmit={handleRegister} className={styles.form}>
-        <input
-          className={styles.input}
-          type="email"
-          placeholder="Digite seu email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input
-          className={styles.input}
-          type="password"
-          placeholder="Digite sua senha"
-          value={senha}
-          onChange={(e) => setSenha(e.target.value)}
-          required
-        />
-        <button type="submit" className={styles.button}>Cadastrar</button>
-        <nav className={styles.navButton}>
-          <Link to="/login">Já tem conta criada? Faça login</Link>
-        </nav>
-      </form>
-      {mensagem && <p style={{ marginTop: '1rem', color: '#fcd34d' }}>{mensagem}</p>}
-    </div>
+    <>
+      <ToastContainer position="top-right" autoClose={4000} />
+      <div className={styles.container}>
+        <h1 className={styles.title}>Cadastro</h1>
+        <form onSubmit={handleRegister} className={styles.form}>
+          <input
+            className={styles.input}
+            type="email"
+            placeholder="Digite seu email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <input
+            className={styles.input}
+            type="password"
+            placeholder="Digite sua senha"
+            value={senha}
+            onChange={(e) => setSenha(e.target.value)}
+            required
+          />
+          <button type="submit" className={styles.button}>
+            Cadastrar
+          </button>
+          <nav className={styles.navButton}>
+            <Link to="/login">Já tem conta criada? Faça login</Link>
+          </nav>
+        </form>
+      </div>
+    </>
   );
 }
