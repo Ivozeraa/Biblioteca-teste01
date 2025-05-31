@@ -3,10 +3,15 @@ import { supabase } from "../../SupabaseClient";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./styles/auth.module.css";
 
+import { FaEye, FaEyeSlash } from "react-icons/fa"; // 👈 ícones de olho
+
 export function Login() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [erro, setErro] = useState("");
+  const [mostrarSenha, setMostrarSenha] = useState(false); // 👈 novo estado
+
+  const navigate = useNavigate();
 
   async function handleLogin(e) {
     e.preventDefault();
@@ -19,6 +24,7 @@ export function Login() {
       setErro("Login falhou: " + error.message);
     } else {
       setErro("");
+      navigate("/");
     }
   }
 
@@ -35,23 +41,35 @@ export function Login() {
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-          <input
-            className={styles.input}
-            type="password"
-            placeholder="Senha"
-            value={senha}
-            onChange={(e) => setSenha(e.target.value)}
-            required
-          />
+
+          <div className={styles.inputGroup}>
+            <input
+              className={styles.input}
+              type={mostrarSenha ? "text" : "password"}
+              placeholder="Senha"
+              value={senha}
+              onChange={(e) => setSenha(e.target.value)}
+              required
+            />
+            <p
+              type="button"
+              onClick={() => setMostrarSenha((prev) => !prev)}
+              className={styles.togglePassword}
+            >
+              {mostrarSenha ? <FaEyeSlash /> : <FaEye />}
+            </p>
+          </div>
+
+          {erro && <p className={styles.error}>{erro}</p>}
+
           <button type="submit" className={styles.button}>
             Entrar
           </button>
           <nav className={styles.navButton}>
-            <Link to="/register">Não tem conta criada? Registre-se</Link>
+            <Link to="/register">Não tem conta? Registre-se</Link>
           </nav>
         </form>
       </div>
-     
     </>
   );
 }
