@@ -1,6 +1,6 @@
 .principaisLivros {
   position: absolute;
-  bottom: 200px;
+  bottom: 100px;
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
@@ -9,6 +9,9 @@
 .livros {
   display: flex;
   justify-content: center;
-  background-color: #242424;
+  background-color: #2e2e2e;
   padding: 10px 0;
+  gap: 50px;
+  padding: 20px;
+  border-radius: 10px;
 }
