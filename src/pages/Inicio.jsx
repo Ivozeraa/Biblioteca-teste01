@@ -18,6 +18,18 @@ export function Inicio() {
             capa={biblia} 
             editora="Editora Ave Maria"
             isbn='853494671X'/>
+
+            <Livro 
+            nome='Bíblia Sagrada' 
+            capa={biblia} 
+            editora="Editora Ave Maria"
+            isbn='853494671X'/>
+
+            <Livro 
+            nome='Bíblia Sagrada' 
+            capa={biblia} 
+            editora="Editora Ave Maria"
+            isbn='853494671X'/>
         </div>
       </div>
     </div>

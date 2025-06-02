@@ -1,7 +1,11 @@
 .livro{
-
+  display: flex;
+  flex-direction: column;
+  width: 10rem;
+  align-items: center;
 }
 
 .livro img{
+  height: 5rem;
   width: 5rem;
 }
