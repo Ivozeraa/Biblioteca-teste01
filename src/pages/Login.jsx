@@ -25,6 +25,9 @@ export function Login() {
       setErro("Login falhou: " + error.message);
     } else {
       setErro("");
+      if(!error){
+
+      }
       toast.success("Login feito com sucesso.");
       navigate("/");
     }
