@@ -1,6 +1,6 @@
 .principaisLivros {
   position: absolute;
-  bottom: 100px;
+  bottom: 250px;
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
@@ -14,4 +14,10 @@
   gap: 50px;
   padding: 20px;
   border-radius: 10px;
+}
+
+.main{
+  width: 70%;
+  margin: auto;
+  margin-top: 7rem;
 }

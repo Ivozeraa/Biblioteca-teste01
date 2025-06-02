@@ -1,11 +1,21 @@
-.livro{
+.livro {
   display: flex;
   flex-direction: column;
   width: 10rem;
   align-items: center;
 }
 
-.livro img{
+
+.livro img {
   height: 5rem;
   width: 5rem;
+  object-fit: cover;
+}
+
+.livro .nome {
+  color: rgb(255, 208, 253);
+}
+
+.livro p {
+  color: rgb(175, 175, 175);
 }

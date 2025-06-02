@@ -6,8 +6,8 @@ export const Livro = ({ nome, autor, isbn, capa, editora }) => {
     <div className={S.livro}>
       <img src={capa} alt="" />
       <div className={S.infor}>
-        <p>{nome}</p>
-        <p>{editora}</p>
+        <p className={S.nome}>{nome}</p>
+        <p>Editora: {editora}</p>
         <p>{isbn}</p>
       </div>
     </div>
