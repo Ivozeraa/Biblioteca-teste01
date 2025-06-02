@@ -53,7 +53,7 @@ export const IconUser = () => {
       if (event === "SIGNED_OUT") {
         setIsLoggedIn(false);
         setUserPhoto(null);
-        toast.info("Você saiu da conta.");
+        toast.dark("✅ - Você saiu da conta.");
         navigate("/");  // navega também no logout
       }
     });

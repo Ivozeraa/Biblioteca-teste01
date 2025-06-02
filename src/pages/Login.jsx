@@ -3,13 +3,14 @@ import { supabase } from "../../SupabaseClient";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./styles/auth.module.css";
 
-import { FaEye, FaEyeSlash } from "react-icons/fa"; // 👈 ícones de olho
+import { FaEye, FaEyeSlash } from "react-icons/fa"; 
+import { toast } from "react-toastify";
 
 export function Login() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [erro, setErro] = useState("");
-  const [mostrarSenha, setMostrarSenha] = useState(false); // 👈 novo estado
+  const [mostrarSenha, setMostrarSenha] = useState(false); 
 
   const navigate = useNavigate();
 
@@ -24,6 +25,7 @@ export function Login() {
       setErro("Login falhou: " + error.message);
     } else {
       setErro("");
+      toast.success("Login feito com sucesso.");
       navigate("/");
     }
   }
