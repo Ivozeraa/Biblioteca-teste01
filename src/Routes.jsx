@@ -11,10 +11,13 @@ import { Config } from "./pages/Config";
 export default function RoutesApp() {
   return (
     <Routes>
+      {/* Páginas sem layout */}
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+
+      {/* Páginas com layout */}
       <Route path="/" element={<Layout />}>
         <Route path="/" element={<Inicio />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
         <Route path="/Livros" element={<BuscarLivros />} />
         <Route path="/Emprestimos" element={<MeusEmprestimos />} />
         <Route path="/Reservas" element={<Reservas />} />
