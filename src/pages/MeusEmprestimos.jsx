@@ -1,7 +1,9 @@
-import React from 'react'
+import S from './styles/MeusEmprestimos.module.css'
 
 export const MeusEmprestimos = () => {
   return (
-    <div>MeusEmprestimos</div>
+    <div className={S.meusEmprestimos}>
+      <h2>Meus Empréstimos</h2>
+    </div>
   )
 }

@@ -88,6 +88,7 @@ export const IconUser = () => {
       <nav className={`${S.userNav} ${menuAberto ? S.userNavAberto : ''}`}>
         <div className={S.login}>
           {isLoggedIn ? (
+            
             <button style={{ color: 'red' }} onClick={handleLogout}>
               Sair
             </button>

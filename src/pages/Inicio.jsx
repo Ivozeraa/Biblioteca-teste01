@@ -4,8 +4,11 @@ import S from './styles/Inicio.module.css'
 
 import { Livro } from '../components/Livro'
 
-import biblia from '../assets/livros/biblia.jpg'
-import hobbit from '../assets/livros/hobbit.webp'
+import biblia from '../assets/livros/biblia.webp'
+import hobbit from '../assets/livros/hobbit.jpg'
+import catecismo from '../assets/livros/catecismo.webp'
+import republica from '../assets/livros/republica.jpg'
+import confissoes from '../assets/livros/confissoes.jpg'
 
 export function Inicio() {
   return (
@@ -27,27 +30,27 @@ export function Inicio() {
             isbn='853494671X' />
 
           <Livro
-            nome='Bíblia Sagrada'
-            capa={biblia}
-            editora="Editora Ave Maria"
+            nome='Catecismo da I.C'
+            capa={catecismo}
+            editora="CNBB"
             isbn='853494671X' />
 
           <Livro
-            nome='Bíblia Sagrada'
-            capa={biblia}
-            editora="Editora Ave Maria"
+            nome='A República'
+            capa={republica}
+            editora="LaFonte"
             isbn='853494671X' />
 
           <Livro
-            nome='Bíblia Sagrada'
-            capa={biblia}
-            editora="Editora Ave Maria"
+            nome='Confissões'
+            capa={confissoes}
+            editora="Penguim"
             isbn='853494671X' />
         </div>
       </div>
 
       <main className={S.main}>
-        <h2>Recem adicionados</h2>
+        <h2>Recém Adicionados</h2>
       </main>
     </div>
   );
