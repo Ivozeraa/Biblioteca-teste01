@@ -1,0 +1,23 @@
+.search {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem; 
+  flex-wrap: wrap; 
+  padding: 1rem;
+}
+
+.search input[type="search"] {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #7e4286;
+  font-size: 1rem;
+  width: 200px; 
+}
+
+.filtro select {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #7e4286;
+  font-size: 1rem;
+}
