@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Carrossel } from "../components/Carrossel"
+import { adicionarLivro } from '../utils/addlivro'
 
 import S from './styles/Inicio.module.css'
 
@@ -13,6 +14,7 @@ import republica from '../assets/livros/republica.jpg'
 import confissoes from '../assets/livros/confissoes.jpg'
 
 export function Inicio() {
+  adicionarLivro()
   const [livroSelecionado, setLivroSelecionado] = useState(null)
 
   const livros = [
@@ -74,6 +76,7 @@ export function Inicio() {
       </main>
 
       <LivroCard livro={livroSelecionado} onClose={() => setLivroSelecionado(null)} />
+
     </div>
   )
 }
