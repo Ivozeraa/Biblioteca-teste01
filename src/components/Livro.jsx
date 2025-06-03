@@ -14,7 +14,7 @@ export const Livro = ({ nome, autor, capa, editora, isbn }) => {
         <p className={S.nome}>{nome}</p>
         <img src={capa} alt={nome} />
         <div className={S.infor}>
-          <p>Editora: {editora}</p>
+          <p>Autor: {autor}</p>
         </div>
       </div>
 
