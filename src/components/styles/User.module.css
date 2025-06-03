@@ -56,3 +56,10 @@
 .userNav a:hover::after {
   width: 100%;
 }
+
+.login{
+  display: flex;
+  align-items: left;
+  flex-direction: column;
+  gap: 20px;
+}

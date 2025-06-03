@@ -21,3 +21,10 @@
   border: 1px solid #7e4286;
   font-size: 1rem;
 }
+
+.listaLivros{
+  display: flex;
+  gap: 50px;
+  padding: 2rem 7rem ;
+  flex-wrap: wrap;
+}
