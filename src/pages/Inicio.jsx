@@ -19,12 +19,14 @@ export function Inicio() {
     {
       nome: 'Bíblia Sagrada',
       capa: biblia,
-      editora: 'Ave Maria',
+      autor: 'Indefinido',
+      editora: 'Paulus',
       isbn: '853494671X',
     },
     {
       nome: 'O Hobbit',
       capa: hobbit,
+      autor: 'J.R.R. Tolkien',
       editora: 'HarperCollins',
       isbn: '853494671X',
     },
@@ -32,18 +34,21 @@ export function Inicio() {
       nome: 'Catecismo da I.C',
       capa: catecismo,
       editora: 'CNBB',
+      autor: 'Indefinido',
       isbn: '853494671X',
     },
     {
       nome: 'A República',
       capa: republica,
       editora: 'LaFonte',
+      autor: 'Platão',
       isbn: '853494671X',
     },
     {
       nome: 'Confissões',
       capa: confissoes,
       editora: 'Penguim Company',
+      autor: 'Santo Agostinho',
       isbn: '853494671X',
     },
   ]
