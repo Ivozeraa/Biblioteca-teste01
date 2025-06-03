@@ -1,6 +1,24 @@
+import { useEffect } from 'react'
 import styles from './styles/LivroCard.module.css'
 
+
 export const LivroCard = ({ livro, onClose }) => {
+  useEffect(() => {
+    if (livro) {
+      const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth
+      document.body.style.overflow = 'hidden'
+      document.body.style.paddingRight = `${scrollBarWidth}px`
+    } else {
+      document.body.style.overflow = ''
+      document.body.style.paddingRight = ''
+    }
+
+    return () => {
+      document.body.style.overflow = ''
+      document.body.style.paddingRight = ''
+    }
+  }, [livro])
+
   if (!livro) return null
 
   return (
