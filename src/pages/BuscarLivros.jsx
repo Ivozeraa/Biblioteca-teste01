@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useLivros } from '../context/LivrosContext'
 import S from './styles/BuscarLivros.module.css'
-import { Livro } from '../components/Livro'  // importe o componente Livro
+import { Livro as LivroComponent } from '../components/Livro' // componente visual
+import { Livro as LivroModel } from '../models/Livro' // classe lógica
 
 export const BuscarLivros = () => {
   const { livros } = useLivros()
@@ -10,21 +11,12 @@ export const BuscarLivros = () => {
   const [livrosFiltrados, setLivrosFiltrados] = useState([])
 
   useEffect(() => {
-    const filtrados = livros.filter((livro) => {
-      const nomeAutor = (livro.nome + ' ' + livro.autor).toLowerCase()
-      const buscaVal = busca.toLowerCase()
-      const categoriaVal = categoria.toLowerCase()
+    const filtrados = livros
+      .map(livro => new LivroModel(livro))
+      .filter(livro => livro.matchesBusca(busca, categoria))
 
-      const correspondeBusca = nomeAutor.includes(buscaVal)
-      const correspondeCategoria = categoriaVal ? livro.categoria.toLowerCase() === categoriaVal : true
-
-      return correspondeBusca && correspondeCategoria
-    })
     setLivrosFiltrados(filtrados)
   }, [livros, busca, categoria])
-
-  const handleBuscaChange = (e) => setBusca(e.target.value)
-  const handleCategoriaChange = (e) => setCategoria(e.target.value)
 
   return (
     <div className={S.buscarLivros}>
@@ -33,10 +25,14 @@ export const BuscarLivros = () => {
           type="search"
           placeholder="Buscar livro"
           value={busca}
-          onChange={handleBuscaChange}
+          onChange={e => setBusca(e.target.value)}
         />
+
         <div className={S.filtro}>
-          <select value={categoria} onChange={handleCategoriaChange}>
+          <select
+            value={categoria}
+            onChange={e => setCategoria(e.target.value)}
+          >
             <option value="">Todas as categorias</option>
             <option value="fantasia">Fantasia</option>
             <option value="romance">Romance</option>
@@ -54,12 +50,12 @@ export const BuscarLivros = () => {
         {livrosFiltrados.length === 0 ? (
           <p>Nenhum livro encontrado.</p>
         ) : (
-          livrosFiltrados.map((livro, index) => (
-            <Livro
-              key={index}
+          livrosFiltrados.map((livro, i) => (
+            <LivroComponent
+              key={i}
               nome={livro.nome}
               autor={livro.autor}
-              capa={livro.capa}
+              capa={livro.getCapaPadrao()}
               editora={livro.editora}
               isbn={livro.isbn}
             />

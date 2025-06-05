@@ -1,0 +1,61 @@
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 500px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background-color: #0D0D0D; /* gray.700 */
+  border-radius: 1rem;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  color: #F2F2F2; /* gray.100 */
+  box-sizing: border-box;
+}
+
+.formContainer h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  color: #a78bfa; /* purple.400 */
+}
+
+.formContainer input,
+.formContainer select {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  background-color: #1A1A1A; /* gray.600 */
+  border: 1px solid #333333; /* gray.400 */
+  color: #F2F2F2; /* gray.100 */
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  transition: border 0.3s, background-color 0.3s;
+  box-sizing: border-box;
+}
+
+.formContainer input::placeholder {
+  color: #808080; /* gray.300 */
+}
+
+.formContainer input:focus,
+.formContainer select:focus {
+  border-color: #8b5cf6; /* purple.500 */
+  background-color: #262626; /* gray.500 */
+  outline: none;
+}
+
+.formContainer button {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  background-color: #7c3aed; /* purple.600 */
+  color: #F2F2F2;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.formContainer button:hover {
+  background-color: #6d28d9; /* purple.700 */
+}

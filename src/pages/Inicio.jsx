@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Carrossel } from "../components/Carrossel"
 import { adicionarLivro } from '../utils/addlivro'
+import { buscarLivrosRecentes } from '../utils/livrosRecentes'
 
 import S from './styles/Inicio.module.css'
 
@@ -14,8 +15,8 @@ import republica from '../assets/livros/republica.jpg'
 import confissoes from '../assets/livros/confissoes.jpg'
 
 export function Inicio() {
-  adicionarLivro()
   const [livroSelecionado, setLivroSelecionado] = useState(null)
+  const [recentes, setRecentes] = useState([])
 
   const livros = [
     {
@@ -55,28 +56,60 @@ export function Inicio() {
     },
   ]
 
+  useEffect(() => {
+    async function iniciar() {
+      await adicionarLivro() // se essa função faz sentido aqui
+      const livrosRecentes = await buscarLivrosRecentes()
+      setRecentes(livrosRecentes)
+    }
+    iniciar()
+  }, [])
+
   return (
     <div className={S.inicio}>
       <Carrossel />
-      <div className={S.principaisLivros}>
+
+      <section className={S.principaisLivros}>
         <h2>Principais Livros</h2>
         <div className={S.livros}>
-          {livros.map((livro, i) => (
+          {livros.map((livro) => (
             <Livro
-              key={i}
-              {...livro}
+              key={livro.isbn || livro.nome}
+              nome={livro.nome}
+              capa={livro.capa}
+              autor={livro.autor}
+              editora={livro.editora}
+              isbn={livro.isbn}
               onClick={() => setLivroSelecionado(livro)}
             />
           ))}
         </div>
-      </div>
+      </section>
 
       <main className={S.main}>
         <h2>Recém Adicionados</h2>
+        <div className={S.livros}>
+          {recentes.length === 0 ? (
+            <p>Nenhum livro recente encontrado.</p>
+          ) : (
+            recentes.map((livro) => (
+              <Livro
+                key={livro.isbn || livro.nome}
+                nome={livro.nome}
+                capa={livro.capa}
+                autor={livro.autor}
+                editora={livro.editora}
+                isbn={livro.isbn}
+                onClick={() => setLivroSelecionado(livro)}
+              />
+            ))
+          )}
+        </div>
       </main>
 
-      <LivroCard livro={livroSelecionado} onClose={() => setLivroSelecionado(null)} />
-
+      {livroSelecionado && (
+        <LivroCard livro={livroSelecionado} onClose={() => setLivroSelecionado(null)} />
+      )}
     </div>
   )
 }

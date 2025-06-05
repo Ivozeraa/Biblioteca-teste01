@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLivros } from '../context/LivrosContext';
+import { Livro } from '../models/AddLivro';
+import S from './styles/AddLivro.module.css';
 
 export const AddLivro = () => {
   const { adicionarLivro } = useLivros();
@@ -21,12 +23,13 @@ export const AddLivro = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    adicionarLivro(dados);
+    const novoLivro = new Livro(dados);
+    adicionarLivro(novoLivro);
     navigate('/livros');
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className={S.formContainer}>
       <h2>Adicionar Livro</h2>
 
       <input
@@ -69,7 +72,6 @@ export const AddLivro = () => {
         onChange={handleChange}
         required
       />
-
       <select
         name="categoria"
         value={dados.categoria}

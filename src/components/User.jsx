@@ -68,6 +68,7 @@ export const IconUser = () => {
 
   const handleLoginClick = () => {
     navigate('/login');
+    setMenuAberto(false);
   };
 
   return (
@@ -91,6 +92,7 @@ export const IconUser = () => {
                 to="/AddLivro"
                 end
                 className={({ isActive }) => (isActive ? 'link ativo' : 'link')}
+                onClick={() => setMenuAberto(false)}
               >
                 Adicionar Livro
               </NavLink>
