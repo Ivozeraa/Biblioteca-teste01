@@ -4,13 +4,13 @@ import { Carrossel } from "../components/Carrossel";
 import S from './styles/Inicio.module.css';
 
 import { Livro } from '../components/Livro';
-import { LivroCard } from '../components/LivroCard';
 
 export function Inicio() {
   const [livroSelecionado, setLivroSelecionado] = useState(null);
   const { livros, removerLivro } = useLivros();
 
   const livrosRecentes = livros.slice(0, 5);
+  const principaisLivros = livros.filter(livro => livro.predefinido);
 
   const handleRemoverLivro = (isbn) => {
     removerLivro(isbn);
@@ -32,7 +32,7 @@ export function Inicio() {
                 key={livro.isbn || livro.nome}
                 {...livro}
                 onClick={() => setLivroSelecionado(livro)}
-                onRemover={handleRemoverLivro} 
+                onRemover={handleRemoverLivro}
               />
             ))
           )}
@@ -42,22 +42,20 @@ export function Inicio() {
       <section className={S.principaisLivros}>
         <h2>Principais Livros</h2>
         <div className={S.livros}>
-          {livros.length === 0 ? (
-            <p>Nenhum livro na biblioteca.</p>
+          {principaisLivros.length === 0 ? (
+            <p>Nenhum livro principal disponível.</p>
           ) : (
-            livros.map((livro) => (
+            principaisLivros.map((livro) => (
               <Livro
                 key={livro.isbn || livro.nome}
                 {...livro}
                 onClick={() => setLivroSelecionado(livro)}
-                onRemover={handleRemoverLivro} 
+                onRemover={handleRemoverLivro}
               />
             ))
           )}
         </div>
       </section>
-
-    
     </div>
   );
 }

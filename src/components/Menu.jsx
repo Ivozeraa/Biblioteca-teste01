@@ -19,7 +19,7 @@ export const Menu = () => {
         end
         className={({ isActive }) => (isActive ? 'link ativo' : 'link')}
       >
-        Buscar Livros
+        Livros
 
       </NavLink>
 
@@ -28,16 +28,7 @@ export const Menu = () => {
         end
         className={({ isActive }) => (isActive ? 'link ativo' : 'link')}
       >
-        Meus Empréstimos
-
-      </NavLink>
-
-      <NavLink
-        to="/Reservas"
-        end
-        className={({ isActive }) => (isActive ? 'link ativo' : 'link')}
-      >
-        Reservas
+        Empréstimos
 
       </NavLink>
 

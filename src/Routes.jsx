@@ -5,7 +5,6 @@ import { AddLivro } from "./pages/AddLivro";
 import Register from "./pages/Registro";
 import { BuscarLivros } from "./pages/BuscarLivros";
 import { MeusEmprestimos } from "./pages/MeusEmprestimos";
-import { Reservas } from "./pages/Reservas";
 import { Layout } from './Layout';
 import { Config } from "./pages/Config";
 
@@ -15,14 +14,13 @@ export default function RoutesApp() {
       {/* Rotas públicas sem layout */}
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="addLivro" element={<AddLivro />} />
 
       {/* Rotas com layout padrão */}
       <Route path="/" element={<Layout />}>
         <Route index element={<Inicio />} />
-        <Route path="addLivro" element={<AddLivro />} />
         <Route path="livros" element={<BuscarLivros />} />
         <Route path="emprestimos" element={<MeusEmprestimos />} />
-        <Route path="reservas" element={<Reservas />} />
         <Route path="config" element={<Config />} />
       </Route>
     </Routes>
