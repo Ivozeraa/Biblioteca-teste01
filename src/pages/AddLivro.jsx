@@ -5,7 +5,6 @@ import { Livro } from '../models/AddLivro';
 import S from './styles/AddLivro.module.css';
 
 export const AddLivro = () => {
-  const { adicionarLivro } = useLivros();
   const navigate = useNavigate();
 
   const [dados, setDados] = useState({
@@ -13,15 +12,15 @@ export const AddLivro = () => {
     autor: '',
     capa: '',
     editora: '',
-    isbn: '',
     categoria: '',
+    descricao: '',
   });
 
   const handleChange = ({ target: { name, value } }) => {
     setDados((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const novoLivro = new Livro(dados);
     adicionarLivro(novoLivro);
@@ -88,6 +87,8 @@ export const AddLivro = () => {
         <option value="suspense">Suspense</option>
         <option value="historico">Histórico</option>
       </select>
+
+      <textarea name="descricao" placeholder="Descrição do livro" value={dados.descricao} onChange={handleChange} required />
 
       <button type="submit">Adicionar</button>
     </form>
