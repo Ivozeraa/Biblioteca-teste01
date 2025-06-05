@@ -1,22 +1,46 @@
-import { useState, useEffect } from 'react'
-import { useLivros } from '../context/LivrosContext'
-import S from './styles/BuscarLivros.module.css'
-import { Livro as LivroComponent } from '../components/Livro' // componente visual
-import { Livro as LivroModel } from '../models/Livro' // classe lógica
+import { useState, useEffect } from 'react';
+import { useLivros } from '../context/LivrosContext';
+import S from './styles/BuscarLivros.module.css';
+import { Livro as LivroComponent } from '../components/Livro';
+import { Livro as LivroModel } from '../models/Livro';
+import { LivroCard } from '../components/LivroCard';
 
 export const BuscarLivros = () => {
-  const { livros } = useLivros()
-  const [busca, setBusca] = useState('')
-  const [categoria, setCategoria] = useState('')
-  const [livrosFiltrados, setLivrosFiltrados] = useState([])
+  const { livros, removerLivro } = useLivros();
+  const [busca, setBusca] = useState('');
+  const [categoria, setCategoria] = useState('');
+  const [livroSelecionado, setLivroSelecionado] = useState(null);
+  const [livrosFiltrados, setLivrosFiltrados] = useState([]);
 
   useEffect(() => {
     const filtrados = livros
-      .map(livro => new LivroModel(livro))
+      .map(livroData => new LivroModel(livroData))
       .filter(livro => livro.matchesBusca(busca, categoria))
+      .map(livro => ({
+        nome: livro.nome,
+        autor: livro.autor,
+        capa: livro.getCapaPadrao(),
+        editora: livro.editora,
+        isbn: livro.isbn,
+        categoria: livro.categoria,
+        descricao: livro.descricao,
+      }));
 
-    setLivrosFiltrados(filtrados)
-  }, [livros, busca, categoria])
+    setLivrosFiltrados(filtrados);
+  }, [livros, busca, categoria]);
+
+  const abrirLivro = (livro) => {
+    setLivroSelecionado(livro);
+  };
+
+  const fecharLivro = () => {
+    setLivroSelecionado(null);
+  };
+
+  const handleRemover = (isbn) => {
+    removerLivro(isbn);
+    fecharLivro();
+  };
 
   return (
     <div className={S.buscarLivros}>
@@ -27,7 +51,6 @@ export const BuscarLivros = () => {
           value={busca}
           onChange={e => setBusca(e.target.value)}
         />
-
         <div className={S.filtro}>
           <select
             value={categoria}
@@ -50,18 +73,21 @@ export const BuscarLivros = () => {
         {livrosFiltrados.length === 0 ? (
           <p>Nenhum livro encontrado.</p>
         ) : (
-          livrosFiltrados.map((livro, i) => (
+          livrosFiltrados.map(livro => (
             <LivroComponent
-              key={i}
+              key={livro.isbn}
               nome={livro.nome}
               autor={livro.autor}
-              capa={livro.getCapaPadrao()}
+              capa={livro.capa}
               editora={livro.editora}
               isbn={livro.isbn}
+              categoria={livro.categoria}
+              onClick={() => abrirLivro(livro)}
+              onRemover={handleRemover}
             />
           ))
         )}
       </div>
     </div>
-  )
-}
+  );
+};

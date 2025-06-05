@@ -1,73 +1,75 @@
 import { useEffect } from 'react'
-import styles from './styles/LivroCard.module.css'
-import { supabase } from '../../SupabaseClient'
+import styles from './styles/LivroCard.module.css' // seu CSS, ajuste o caminho se precisar
 
-
-export const LivroCard = ({ livro, onClose }) => {
+export const LivroCard = ({ livro, onClose, onRemover }) => {
+  // Bloqueia o scroll do body quando o card está aberto
   useEffect(() => {
     if (livro) {
-      const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth
-      document.body.style.overflow = 'hidden'
-      document.body.style.paddingRight = `${scrollBarWidth}px`
+      const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
+      document.body.style.overflow = 'hidden';
+      document.body.style.paddingRight = `${scrollBarWidth}px`;
     } else {
-      document.body.style.overflow = ''
-      document.body.style.paddingRight = ''
+      document.body.style.overflow = '';
+      document.body.style.paddingRight = '';
     }
 
     return () => {
-      document.body.style.overflow = ''
-      document.body.style.paddingRight = ''
+      document.body.style.overflow = '';
+      document.body.style.paddingRight = '';
     }
-  }, [livro])
+  }, [livro]);
 
-  if (!livro) return null
+  if (!livro) return null;
 
-const pegarEmprestado = async () => {
-  if (!livro?.id) {
-    alert('Erro: Livro inválido ou incompleto.')
-    return
-  }
-
-  try {
-    const { data: { user }, error: userError } = await supabase.auth.getUser()
-    if (userError) throw userError
-
-    const { error } = await supabase
-      .from('emprestimos')
-      .insert([{
-        user_id: user.id,
-        livro_id: livro.id,
-        data_emprestimo: new Date().toISOString(),
-        devolvido: false
-      }])
-
-    if (error) {
-      console.error('Erro ao pegar emprestado:', error)
-      alert('Falha ao pegar o livro emprestado. Tente de novo.')
-    } else {
-      alert('Livro emprestado com sucesso!')
+  const handleRemoverClick = () => {
+    if (window.confirm(`Tem certeza que deseja remover o livro "${livro.nome}"?`)) {
+      onRemover(livro.isbn);
     }
-  } catch (err) {
-    console.error('Erro geral:', err)
-    alert('Erro inesperado. Tente novamente.')
-  }
-}
-
+  };
 
   return (
     <div className={styles.overlay}>
       <div className={styles.card}>
-        <button className={styles.fechar} onClick={onClose}>×</button>
-        <img src={livro.capa} alt={livro.nome} />
+        <button
+          className={styles.fechar}
+          onClick={onClose}
+          aria-label="Fechar"
+        >
+          ×
+        </button>
+
+        <img
+          src={livro.capa}
+          alt={`Capa do livro ${livro.nome}`}
+          className={styles.capa}
+        />
+
         <h2>{livro.nome}</h2>
+        <p><strong>Autor:</strong> {livro.autor}</p>
         <p><strong>Editora:</strong> {livro.editora}</p>
         <p><strong>ISBN:</strong> {livro.isbn}</p>
-        <p className={styles.desc}>Descrição do livro pode ser adicionada aqui.</p>
+        <p><strong>Categoria:</strong> {livro.categoria}</p>
 
-        <button onClick={pegarEmprestado} className={styles.pegarBotao}>
-          Pegar Emprestado
+        <p className={styles.descricao}>
+          {livro.descricao || 'Descrição do livro não disponível.'}
+        </p>
+
+        <button
+          onClick={handleRemoverClick}
+          className={styles.removerBotao}
+          style={{
+            marginTop: '10px',
+            backgroundColor: '#e74c3c',
+            color: 'white',
+            padding: '10px 15px',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer'
+          }}
+        >
+          Remover Livro
         </button>
       </div>
     </div>
-  )
-}
+  );
+};

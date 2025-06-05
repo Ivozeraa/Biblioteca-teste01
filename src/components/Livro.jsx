@@ -1,12 +1,12 @@
-import { useState } from 'react'
-import S from './styles/Livro.module.css'
-import { LivroCard } from './LivroCard'
+import { useState } from 'react';
+import S from './styles/Livro.module.css';
+import { LivroCard } from './LivroCard';
 
-export const Livro = ({ nome, autor, capa, editora, isbn }) => {
-  const [mostrarCard, setMostrarCard] = useState(false)
+export const Livro = ({ nome, autor, capa, editora, isbn, onClick, onRemover }) => {
+  const [mostrarCard, setMostrarCard] = useState(false);
 
-  const abrirCard = () => setMostrarCard(true)
-  const fecharCard = () => setMostrarCard(false)
+  const abrirCard = () => setMostrarCard(true);
+  const fecharCard = () => setMostrarCard(false);
 
   return (
     <>
@@ -22,8 +22,9 @@ export const Livro = ({ nome, autor, capa, editora, isbn }) => {
         <LivroCard
           livro={{ nome, autor, capa, editora, isbn }}
           onClose={fecharCard}
+          onRemover={onRemover}  // repassa o onRemover para o card
         />
       )}
     </>
-  )
-}
+  );
+};
