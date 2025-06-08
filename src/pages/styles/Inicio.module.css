@@ -16,6 +16,7 @@
 }
 
 .main{
+  display: flex;
   width: 70%;
   margin: auto;
   margin-top: 7rem;
