@@ -6,6 +6,7 @@ import S from './styles/Inicio.module.css';
 
 import { Livro } from '../components/Livro';
 import { LivroCard } from '../components/LivroCard';
+import { Autores } from '../components/Autores'
 
 export function Inicio() {
   const [isbnSelecionado, setIsbnSelecionado] = useState(null);
@@ -67,6 +68,13 @@ export function Inicio() {
           )}
         </div>
       </main>
+
+      <div classname={S.autores}> 
+        <h2>Principais Autores</h2>
+        <Autores/>
+
+      </div>
+
 
       <LivroCard
         livro={livroSelecionado}
