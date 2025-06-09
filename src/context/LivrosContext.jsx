@@ -50,10 +50,34 @@ const livrosPreDefinidos = [
     isbn: "9788515032406",
     categoria: "filosofia",
     descricao: "Uma autobiografia espiritual que é uma das obras mais importantes da literatura cristã.",
-    capa: "data:image/webp;base64,UklGRuoXAABXRUJQVlA4IN4XAABwSgCdASp2AKYAPnEYnE4koSSkmiCQDglB1wBRBKiu8mx9hufArbs3Lzsq+lLcG+ZnzgNOI3qq0suEX5PwP8ifxX959CfFX2E/QfqJ9jfQXtQ/n+8/5U6gvt/zxXt+m3oF+7X2fzmPs/Mz7T/9fpu/6HhT/hP+N7An58/6n3AfLl/5eYz9g/3n/x9wj9fvTk9if7q+yL+3I/+i2EmYUuufDT6D4IfcQyGV9vGU+exzr1HipTo4v7YW/v32EhudEgaDkajeUiqJgXAkpDISGUd4bwgfsi/aFlSitKJ2UCSJ7x7121EWio5jzfEVrLeUFzLwpyDkzhWY63s35s/tShKAdMgnwf1EQGGTdVLDNzKNstGml/LdGgVgowUUHrXHb/TxxAIXKFQjnfd/Yro79a56QuXLas7JQ5WsyuLQ3JAG7zteZsqN/4/DCJTWFok0/NJ73xWXp7wWqdZ8IKl2UwX77nBSQt9mOFK0LcM8J7Y7D6ipdiQiZGWLkHLXFhwjR6WPd+lSi5HUw1OKPyeWcHcsihWmCr0qKcebwwFe4/pHELqPHp9jhgSP4IVsiH5+5J5L6xoXG2g9CZMncNA5Mq46RTYowgKXPIvSc9Ir/xUWdlXdgYy0jnG6RhVh5+V1fyDCn4/6tqpl1bUIVfQWXvH+qM3PbyF1XwbSdw9xBJ9yi+8oHO/CyrQ8upWUCCCDRYJR9nXkGquR6DuuUxt5hADUbxD42EfZ/jTlLxe5/5i9CFGG7SCIN8oEtjgBaE4u0Lg8vJR3qiAGSdfPMJPrrMzPnREzW8zMaPHEOw8AAP74ojAxTV/xUjd1F7zf/WAA6CzxMqMcCuMzP4xk5hNSvEijLOCNVtPqWP7O0E3t5Y8FSsIeCro1dbR/s16LNrludPKXsBx/HTR+NXDgeyAN5gJC/Pz27mbR/ooFJaoqecLtEG4kGgF7C7hqvsJ/AOlGi/YPwYh8Ria44e0Rsyd7LYpxvyNWagM/V6pQJe0GgDDqq6EHmbwa73Vgq6vQI4W8DD1/6JWigYC9DtEtg85HVgu6YXT2kVRrOGV0a69FEmbyBZPJ4kQLYDMhaJ5QsmqMe6+3HFU8UWgQTd94MjFCoRWFKQ9doO2uXlfah7VWCe0O3aymliwGpFHW8UjxL278bXTEjE/Z85xtug8rcfqFFMVMgxY3TYXHYkQcqqGaY19wFuDzDe+VIZ0dU/mgrx69emXl5ZBFzb3Mw4ibof2AQwjCjBwwQFvT4jOJEMPILgoF9bNjvSP+AtVo3GGSbMMxHb9aQ6n9OAISBJFkPz+ZW9NGJxoaVER5OPQlkYggon63ADkyNc2A4J5IDtG8ftXiA5+Y/Gl6dOS0cKO9VD4Y1ZAlTYPpwDikZl5FqMJbthQhHhzA4ejoNRDG5TLyx82RGdwrVxxsUbG0fqRpykzlhuqOHQyoebGUk9f/a5RoPDxqzmuTnoSP/nw+yWKt5zevd0SnbYypcHeSfHZjZxhTzM081/LmUij1fQRAYGw9ZmwSchNN0ErwjKjvUA09eTRvcgrWJ5eqcRSh3q/+b+8GJkupswE0gyYCD4OEo+cE/YZk3fUxltyeBlTlkgsQPJ5VFCtWvdxV4eNJK/KlVPwrntA10J27fiiTBM4wyEmwZeuYFdpyIskE284fEOq1AzPtbHDbRtKZi/GTOJOjvwFjpGBjua+C5Pa7uDH+MX4vFTD",
+    capa: "", // substitua por uma capa válida
     predefinido: true
   }
 ];
+
+// Dentro de LivrosProvider, após `removerLivro`:
+const emprestarLivro = (isbn) => {
+  setLivrosUsuario((prev) => {
+    const existe = prev.find(l => l.isbn === isbn);
+    if (existe) {
+      return prev.map(l => l.isbn === isbn ? { ...l, emprestado: true } : l);
+    }
+    // Se for pré-definido, adiciona uma entrada "emprestado" ao usuário
+    if (livrosPreDefinidos.some(l => l.isbn === isbn)) {
+      return [...prev, { isbn, emprestado: true }];
+    }
+    return prev;
+  });
+};
+
+const devolverLivro = (isbn) => {
+  setLivrosUsuario((prev) =>
+    prev.map(l =>
+      l.isbn === isbn ? { ...l, emprestado: false } : l
+    )
+  );
+};
+
 
 const CHAVE_LOCALSTORAGE = 'livrosUsuario';
 
@@ -63,11 +87,10 @@ export const LivrosProvider = ({ children }) => {
     return dados ? JSON.parse(dados) : [];
   });
 
-  // MODIFICAÇÃO AQUI: filtra para não salvar remoções de livros pré-definidos no localStorage
   useEffect(() => {
     const somenteLivrosUsuario = livrosUsuario.filter(l => {
       if (l.removido && livrosPreDefinidos.some(lp => lp.isbn === l.isbn)) {
-        return false; // não salva remoção de livro pré-definido
+        return false;
       }
       return true;
     });
@@ -80,33 +103,81 @@ export const LivrosProvider = ({ children }) => {
       .filter(l => l.removido)
       .map(l => l.isbn);
 
-    const livrosAdicionados = livrosUsuario.filter(l => !l.removido);
+    const livrosAdicionados = livrosUsuario.filter(l => !l.removido && !livrosPreDefinidos.some(lp => lp.isbn === l.isbn));
 
-    const livrosFixosVisiveis = livrosPreDefinidos.filter(l => !isbnsRemovidos.includes(l.isbn));
+    const livrosFixosVisiveis = livrosPreDefinidos
+      .filter(l => !isbnsRemovidos.includes(l.isbn))
+      .map(l => {
+        const dadosUsuario = livrosUsuario.find(u => u.isbn === l.isbn);
+        return dadosUsuario ? { ...l, ...dadosUsuario } : l;
+      });
 
     return [...livrosFixosVisiveis, ...livrosAdicionados];
   }, [livrosUsuario]);
 
   const adicionarLivro = (novoLivro) => {
-    setLivrosUsuario((prev) => [...prev, { ...novoLivro }]);
+    setLivrosUsuario(prev => [...prev, { ...novoLivro }]);
   };
 
   const removerLivro = (isbn) => {
     if (livrosPreDefinidos.some(l => l.isbn === isbn)) {
-      setLivrosUsuario((prev) => {
+      setLivrosUsuario(prev => {
         if (prev.some(l => l.isbn === isbn && l.removido)) return prev;
         return [...prev, { isbn, removido: true }];
       });
     } else {
-      setLivrosUsuario((prev) => prev.filter(l => l.isbn !== isbn));
+      setLivrosUsuario(prev => prev.filter(l => l.isbn !== isbn));
     }
+  };
+
+  const emprestarLivro = (isbn) => {
+    setLivrosUsuario(prev => {
+      const index = prev.findIndex(l => l.isbn === isbn);
+      if (index !== -1) {
+        const novo = [...prev];
+        novo[index] = {
+          ...novo[index],
+          emprestado: true,
+          dataEmprestimo: new Date().toISOString()
+        };
+        return novo;
+      }
+      return [...prev, {
+        isbn,
+        emprestado: true,
+        dataEmprestimo: new Date().toISOString()
+      }];
+    });
+  };
+
+  const devolverLivro = (isbn) => {
+    setLivrosUsuario(prev => {
+      const index = prev.findIndex(l => l.isbn === isbn);
+      if (index !== -1) {
+        const novo = [...prev];
+        novo[index] = {
+          ...novo[index],
+          emprestado: false,
+          dataEmprestimo: null
+        };
+        return novo;
+      }
+      return [...prev, {
+        isbn,
+        emprestado: false,
+        dataEmprestimo: null
+      }];
+    });
   };
 
   const valorContexto = useMemo(() => ({
     livros,
     adicionarLivro,
     removerLivro,
+    emprestarLivro,
+    devolverLivro,
   }), [livros]);
+
 
   return (
     <LivrosContext.Provider value={valorContexto}>

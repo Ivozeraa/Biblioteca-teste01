@@ -13,3 +13,10 @@
   object-fit: cover;
   border-radius: 50%;
 }
+
+.autores {
+  width: 90%;
+  max-width: 1000px;
+  margin: 0 auto;
+  margin-bottom: 5rem;
+}

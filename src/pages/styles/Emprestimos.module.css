@@ -1,0 +1,17 @@
+.emprestimos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+}
+
+.listaLivros {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 1200px;
+  margin-top: 2rem;
+}

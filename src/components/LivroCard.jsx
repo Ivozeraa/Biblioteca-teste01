@@ -1,21 +1,25 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import styles from './styles/LivroCard.module.css';
+import { useLivros } from '../context/LivrosContext';
 
-export const LivroCard = ({ livro, onClose, onRemover }) => {
+export const LivroCard = ({ livro, onClose, onRemover, onDevolver, mostrarApenasDevolver = false }) => {
   const modalRef = useRef(null);
+  const { emprestarLivro } = useLivros();
+
+  // Remove o estado local emprestado e usa direto livro.emprestado para evitar inconsistência
+  const emprestado = livro?.emprestado || false;
 
   useEffect(() => {
     if (!livro) return;
 
-    const handleBodyScroll = () => {
-      const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
-      document.body.style.overflow = 'hidden';
-      document.body.style.paddingRight = `${scrollBarWidth}px`;
+    const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
+    document.body.style.overflow = 'hidden';
+    document.body.style.paddingRight = `${scrollBarWidth}px`;
+
+    const handleEsc = (e) => {
+      if (e.key === 'Escape') onClose();
     };
 
-    const handleEsc = (e) => e.key === 'Escape' && onClose();
-
-    handleBodyScroll();
     window.addEventListener('keydown', handleEsc);
     modalRef.current?.focus();
 
@@ -26,15 +30,21 @@ export const LivroCard = ({ livro, onClose, onRemover }) => {
     };
   }, [livro, onClose]);
 
-  useEffect(() => {
-    if (livro && modalRef.current) {
-      modalRef.current.focus();
-    }
-  }, [livro]);
-
   const handleRemoverClick = () => {
     if (window.confirm(`Tem certeza que deseja remover "${livro.nome}"?`)) {
       onRemover(livro.isbn);
+      onClose();
+    }
+  };
+
+  const handleEmprestarClick = () => {
+    emprestarLivro(livro.isbn);
+    // não precisa setar estado local, pois emprestado virá atualizado via props/contexto
+  };
+
+  const handleDevolverClick = () => {
+    if (onDevolver) {
+      onDevolver(livro.isbn);
       onClose();
     }
   };
@@ -51,7 +61,7 @@ export const LivroCard = ({ livro, onClose, onRemover }) => {
     >
       <div
         className={styles.card}
-        onClick={e => e.stopPropagation()}
+        onClick={(e) => e.stopPropagation()}
         ref={modalRef}
         tabIndex={-1}
       >
@@ -99,14 +109,36 @@ export const LivroCard = ({ livro, onClose, onRemover }) => {
         </div>
 
         <div className={styles.buttons}>
-          <button
-            type="button"
-            onClick={handleRemoverClick}
-            aria-label={`Remover livro ${livro.nome}`}
-            className={`${styles.btn} ${styles.btnRemover}`}
-          >
-            Remover Livro
-          </button>
+          {mostrarApenasDevolver ? (
+            <button
+              type="button"
+              onClick={handleDevolverClick}
+              className={styles.btn}
+            >
+              Devolver Livro
+            </button>
+          ) : (
+            <>
+              <button
+                type="button"
+                onClick={handleEmprestarClick}
+                disabled={emprestado}
+                className={styles.btn}
+              >
+                {emprestado ? 'Livro Emprestado' : 'Pegar Emprestado'}
+              </button>
+
+              <button
+                style={{ backgroundColor: 'red' }}
+                type="button"
+                onClick={handleRemoverClick}
+                aria-label={`Remover livro ${livro.nome}`}
+                className={`${styles.btn} ${styles.btnRemover}`}
+              >
+                Remover Livro
+              </button>
+            </>
+          )}
         </div>
       </div>
     </div>
