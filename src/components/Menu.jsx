@@ -32,6 +32,15 @@ export const Menu = () => {
 
       </NavLink>
 
+      <NavLink
+        to="/Reservas"
+        end
+        className={({ isActive }) => (isActive ? 'link ativo' : 'link')}
+      >
+        Reservas
+
+      </NavLink>
+
     </nav>
   )
 }

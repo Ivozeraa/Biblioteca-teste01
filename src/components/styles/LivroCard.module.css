@@ -1,44 +1,82 @@
 .overlay {
   position: fixed;
-  inset: 0; 
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9999;
+  z-index: 9999999;
 }
+
 
 .card {
   background: #141414;
   color: white;
   padding: 2rem;
   border-radius: 1rem;
-  width: 90%;
-  max-width: 400px;
+  max-width: 600px;
   text-align: center;
   position: relative;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 140px;
+}
+
+.left img,
 .card img {
   width: 120px;
   height: 180px;
   object-fit: cover;
   border-radius: 0.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.right {
+  flex: 1;
+  color: #ccc;
+  font-size: 0.95rem;
+  margin-top: 20px;
 }
 
 .fechar {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
+  top: -0.5rem;
+  right: -0.5rem;
   font-size: 1.5rem;
   background: none;
   border: none;
   color: white;
   cursor: pointer;
+  z-index: 10;
 }
 
 .desc {
   margin-top: 1rem;
   font-size: 0.9rem;
   color: #ccc;
+}
+
+.buttons {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
 }

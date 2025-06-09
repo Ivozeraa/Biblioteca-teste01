@@ -24,10 +24,23 @@ export const BuscarLivros = () => {
         isbn: livro.isbn,
         categoria: livro.categoria,
         descricao: livro.descricao,
+        emprestado: livro.emprestado || false,
+        dataEmprestimo: livro.dataEmprestimo || null,
       }));
 
     setLivrosFiltrados(filtrados);
-  }, [livros, busca, categoria]);
+
+    if (livroSelecionado) {
+      const livroAtualizado = livros.find(l => l.isbn === livroSelecionado.isbn);
+      if (livroAtualizado) {
+        setLivroSelecionado({
+          ...livroSelecionado,
+          emprestado: livroAtualizado.emprestado || false,
+          dataEmprestimo: livroAtualizado.dataEmprestimo || null,
+        });
+      }
+    }
+  }, [livros, busca, categoria, livroSelecionado]);
 
   const abrirLivro = (livro) => {
     setLivroSelecionado(livro);
@@ -50,11 +63,13 @@ export const BuscarLivros = () => {
           placeholder="Buscar livro"
           value={busca}
           onChange={e => setBusca(e.target.value)}
+          aria-label="Buscar livro"
         />
         <div className={S.filtro}>
           <select
             value={categoria}
             onChange={e => setCategoria(e.target.value)}
+            aria-label="Filtrar por categoria"
           >
             <option value="">Todas as categorias</option>
             <option value="fantasia">Fantasia</option>
@@ -65,6 +80,7 @@ export const BuscarLivros = () => {
             <option value="drama">Drama</option>
             <option value="suspense">Suspense</option>
             <option value="historico">Histórico</option>
+            <option value="religioso">Religioso</option>
           </select>
         </div>
       </div>
@@ -82,12 +98,21 @@ export const BuscarLivros = () => {
               editora={livro.editora}
               isbn={livro.isbn}
               categoria={livro.categoria}
+              descricao={livro.descricao}
+              emprestado={livro.emprestado}
               onClick={() => abrirLivro(livro)}
               onRemover={handleRemover}
             />
           ))
         )}
       </div>
+
+      <LivroCard
+        livro={livroSelecionado}
+        onClose={fecharLivro}
+        onRemover={handleRemover}
+      />
+
     </div>
   );
 };

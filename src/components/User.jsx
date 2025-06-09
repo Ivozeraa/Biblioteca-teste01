@@ -103,6 +103,14 @@ export const IconUser = () => {
               >
                 Adicionar Livro
               </NavLink>
+              <NavLink
+                to="/Config"
+                end
+                className={({ isActive }) => (isActive ? "link ativo" : "link")}
+                onClick={() => setMenuAberto(false)}
+              >
+                Configurações
+              </NavLink>
               <button style={{ color: "red" }} onClick={handleLogout}>
                 Sair
               </button>

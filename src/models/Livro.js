@@ -1,11 +1,16 @@
 export class Livro {
-  constructor({ nome, autor, capa, editora, isbn, categoria }) {
+  constructor({ nome, autor, capa, editora, isbn, categoria, descricao }) {
     this.nome = nome;
     this.autor = autor;
     this.capa = capa;
     this.editora = editora;
     this.isbn = isbn;
     this.categoria = categoria;
+    this.descricao = descricao;
+
+    this.emprestado = false;
+    this.usuarioEmprestimo = null;
+    this.dataEmprestimo = null;
   }
 
   getNomeAutor() {
@@ -29,5 +34,23 @@ export class Livro {
     const correspondeCategoria = categoriaVal ? this.categoria.toLowerCase() === categoriaVal : true;
 
     return correspondeBusca && correspondeCategoria;
+  }
+
+  emprestarPara(usuario) {
+    if (this.emprestado) {
+      throw new Error(`O livro "${this.nome}" já está emprestado.`);
+    }
+    this.emprestado = true;
+    this.usuarioEmprestimo = usuario;
+    this.dataEmprestimo = new Date();
+  }
+
+  devolver() {
+    if (!this.emprestado) {
+      throw new Error(`O livro "${this.nome}" não está emprestado.`);
+    }
+    this.emprestado = false;
+    this.usuarioEmprestimo = null;
+    this.dataEmprestimo = null;
   }
 }

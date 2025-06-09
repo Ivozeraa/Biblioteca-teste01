@@ -2,7 +2,7 @@ import { useState } from 'react';
 import S from './styles/Livro.module.css';
 import { LivroCard } from './LivroCard';
 
-export const Livro = ({ nome, autor, capa, editora, isbn, onClick, onRemover }) => {
+export const Livro = ({ nome, autor, capa, editora, isbn, categoria, descricao, onClick, onRemover }) => {
   const [mostrarCard, setMostrarCard] = useState(false);
 
   const abrirCard = () => setMostrarCard(true);
@@ -20,9 +20,9 @@ export const Livro = ({ nome, autor, capa, editora, isbn, onClick, onRemover }) 
 
       {mostrarCard && (
         <LivroCard
-          livro={{ nome, autor, capa, editora, isbn }}
+          livro={{ nome, autor, capa, editora, isbn, categoria, descricao }}
           onClose={fecharCard}
-          onRemover={onRemover}  // repassa o onRemover para o card
+          onRemover={onRemover}  
         />
       )}
     </>
